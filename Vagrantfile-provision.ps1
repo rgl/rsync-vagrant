@@ -112,6 +112,9 @@ function Bash($script) {
     }
 }
 
+# register msys2 bash in the windows explorer context menu.
+reg import MSYS2-Bash-Here.reg
+
 # install the remaining dependencies.
 Bash 'pacman --noconfirm -Sy make zip unzip tar dos2unix'
 
@@ -171,26 +174,17 @@ autocmd FileType go set smartindent cinwords=if,else,switch,for,func
 EOF
 '@
 
-# install ConEmu
-choco install -y conemu
-cp C:\vagrant\Vagrantfile-ConEmu.xml $env:APPDATA\ConEmu.xml
-reg import C:\vagrant\Vagrantfile-ConEmu.reg
-
 # remove the default desktop shortcuts.
 del C:\Users\Public\Desktop\*.lnk
 
 # add MSYS2 shortcut to the Desktop and Start Menu.
 Install-ChocolateyShortcut `
   -ShortcutFilePath "$env:USERPROFILE\Desktop\MSYS2 Bash.lnk" `
-  -TargetPath 'C:\Program Files\ConEmu\ConEmu64.exe' `
-  -Arguments '-run {MSYS2} -icon C:\tools\msys64\msys2.ico' `
-  -IconLocation C:\tools\msys64\msys2.ico `
+  -TargetPath 'C:\tools\msys64\mingw64.exe' `
   -WorkingDirectory $env:USERPROFILE
 Install-ChocolateyShortcut `
   -ShortcutFilePath "C:\Users\All Users\Microsoft\Windows\Start Menu\Programs\MSYS2 Bash.lnk" `
-  -TargetPath 'C:\Program Files\ConEmu\ConEmu64.exe' `
-  -Arguments '-run {MSYS2} -icon C:\tools\msys64\msys2.ico' `
-  -IconLocation C:\tools\msys64\msys2.ico `
+  -TargetPath 'C:\tools\msys64\mingw64.exe' `
   -WorkingDirectory $env:USERPROFILE
 
 # enable show window content while dragging.
