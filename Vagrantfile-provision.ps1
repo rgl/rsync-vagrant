@@ -51,7 +51,7 @@ cp -Force c:/vagrant/Vagrantfile-GoogleChrome-master_preferences.json "$chromeLo
 cp -Force c:/vagrant/Vagrantfile-GoogleChrome-master_bookmarks.html "$chromeLocation\master_bookmarks.html"
 
 # install other useful applications and dependencies.
-choco install -y notepad2
+choco install -y notepad3
 choco install -y --allow-empty-checksums dependencywalker
 choco install -y git --params '/GitOnlyOnPath /NoAutoCrlf'
 choco install -y gitextensions
