@@ -86,6 +86,14 @@ $msys2ConfigPath = "$msys2BasePath\msys2.ini"
         -replace '#?(MSYS2_PATH_TYPE=).+','$1inherit')
 )
 
+# configure msys2 to mount C:\Users at /home.
+[IO.File]::WriteAllText(
+    "$msys2BasePath\etc\nsswitch.conf",
+    ([IO.File]::ReadAllText("$msys2BasePath\etc\nsswitch.conf") `
+        -replace '(db_home: ).+','$1windows')
+)
+Write-Output 'C:\Users /home' | Out-File -Encoding ASCII -Append "$msys2BasePath\etc\fstab"
+
 # define a function for easying the execution of bash scripts.
 $bashPath = "$msys2BasePath\usr\bin\bash.exe"
 function Bash($script) {
@@ -95,7 +103,7 @@ function Bash($script) {
         # we also redirect the stderr to stdout because PowerShell
         # oddly interleaves them.
         # see https://www.gnu.org/software/bash/manual/bash.html#The-Set-Builtin
-        echo 'exec 2>&1;set -eu;export PATH="/usr/bin:$PATH";export HOME=/c/Users/vagrant;' $script | &$bashPath
+        echo 'exec 2>&1;set -eu;export PATH="/usr/bin:$PATH";export HOME=$USERPROFILE;' $script | &$bashPath
         if ($LASTEXITCODE) {
             throw "bash execution failed with exit code $LASTEXITCODE"
         }
