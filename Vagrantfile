@@ -13,7 +13,7 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
     vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
   end
-  config.vm.provision "shell", inline: "$env:chocolateyVersion = '1.2.1'; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')", name: "Install Chocolatey"
+  config.vm.provision "shell", inline: "$env:chocolateyVersion = '1.3.0'; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')", name: "Install Chocolatey"
   config.vm.provision "shell", path: "Vagrantfile-locale.ps1"
   config.vm.provision "shell", path: "Vagrantfile-provision.ps1"
 end
