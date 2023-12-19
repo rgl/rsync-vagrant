@@ -6,13 +6,6 @@ Vagrant.configure(2) do |config|
     lv.keymap = "pt"
     config.vm.synced_folder ".", "/vagrant", type: "smb", smb_username: ENV["USER"], smb_password: ENV["VAGRANT_SMB_PASSWORD"]
   end
-  config.vm.provider "virtualbox" do |vb, config|
-    vb.linked_clone = true
-    vb.memory = 2*1024
-    vb.customize ["modifyvm", :id, "--vram", 64]
-    vb.customize ["modifyvm", :id, "--clipboard", "bidirectional"]
-    vb.customize ["modifyvm", :id, "--draganddrop", "bidirectional"]
-  end
   config.vm.provision "shell", inline: "$env:chocolateyVersion = '1.3.0'; Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://community.chocolatey.org/install.ps1')", name: "Install Chocolatey"
   config.vm.provision "shell", path: "Vagrantfile-locale.ps1"
   config.vm.provision "shell", path: "Vagrantfile-provision.ps1"
