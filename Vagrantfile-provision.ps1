@@ -32,14 +32,6 @@ function choco {
     Start-Choco $Args
 }
 
-# install Google Chrome.
-# see https://www.chromium.org/administrators/configuring-other-preferences
-choco install -y --ignore-checksums googlechrome
-$chromeLocation = 'C:\Program Files\Google\Chrome\Application'
-cp -Force c:/vagrant/Vagrantfile-GoogleChrome-external_extensions.json (Resolve-Path "$chromeLocation\*\default_apps\external_extensions.json")
-cp -Force c:/vagrant/Vagrantfile-GoogleChrome-master_preferences.json "$chromeLocation\master_preferences"
-cp -Force c:/vagrant/Vagrantfile-GoogleChrome-master_bookmarks.html "$chromeLocation\master_bookmarks.html"
-
 # install other useful applications and dependencies.
 choco install -y notepad3
 choco install -y --allow-empty-checksums dependencywalker
