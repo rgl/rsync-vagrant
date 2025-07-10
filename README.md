@@ -10,5 +10,6 @@ Build the `rsync-vagrant-<version>-<date>.zip` file:
 
 ```bash
 vagrant up --no-destroy-on-error --provider=libvirt
+ls -laF rsync-vagrant-*.zip
 vagrant destroy -f
 ```
