@@ -1,5 +1,5 @@
 Vagrant.configure(2) do |config|
-  config.vm.box = "windows-2022-amd64" # see https://github.com/rgl/windows-vagrant
+  config.vm.box = "windows-2022-uefi-amd64" # see https://github.com/rgl/windows-vagrant
   config.vm.provider "libvirt" do |lv, config|
     lv.memory = 2*1024
     lv.cpu_mode = "host-passthrough"

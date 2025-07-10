@@ -4,7 +4,7 @@ This is used in my [windows vagrant base images](https://github.com/rgl/windows-
 
 # Usage
 
-Install the [windows-2022-amd64 vagrant box](https://github.com/rgl/windows-vagrant).
+Install the [windows-2022-uefi-amd64 vagrant box](https://github.com/rgl/windows-vagrant).
 
 Build the `rsync-vagrant-<version>-<date>.zip` file:
 
