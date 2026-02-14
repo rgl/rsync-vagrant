@@ -18,9 +18,16 @@ mkdir $d | Out-Null
 Expand-Archive `
     -Path $z `
     -DestinationPath $d
+Set-Content `
+    -Encoding ascii `
+    -NoNewline `
+    -Path "$d\cmd\rsync.shim" `
+    -Value (
+        (Get-Content -Raw "$d\cmd\rsync.shim") `
+            -replace "C:\\Program Files\\rsync","$d")
 
 # add to path.
-$env:PATH = "$d;C:\Windows\system32;C:\Windows"
+$env:PATH = "$d\cmd;C:\Windows\system32;C:\Windows"
 
 # test.
 if (Test-Path C:\tmp\test) {

@@ -20,7 +20,7 @@ Download a release, e.g.:
 
 ```powershell
 # see https://github.com/rgl/rsync-vagrant/releases
-$version = "3.4.1-20250411"
+$version = "3.4.1-20260214"
 $url = "https://github.com/rgl/rsync-vagrant/releases/download/v$version/rsync-vagrant-$version.zip"
 $d = "$PWD\tmp\rsync"
 $z = "$d\rsync.zip"
@@ -32,6 +32,13 @@ mkdir "$d" | Out-Null
 Expand-Archive `
     -Path $z `
     -DestinationPath $d
+Set-Content `
+    -Encoding ascii `
+    -NoNewline `
+    -Path "$d\cmd\rsync.shim" `
+    -Value (
+        (Get-Content -Raw "$d\cmd\rsync.shim") `
+            -replace "C:\\Program Files\\rsync","$d")
 ```
 
 In Windows PowerShell, you can synchronize two local directories as, e.g.:
@@ -39,7 +46,7 @@ In Windows PowerShell, you can synchronize two local directories as, e.g.:
 **NB** You cannot use a path with a Windows drive letter, e.g., instead of `c:\` use `/cygdrive/c/`.
 
 ```powershell
-&"$d/rsync.exe" `
+&"$d/cmd/rsync.exe" `
     --verbose `
     --archive `
     --delete `

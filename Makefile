@@ -9,7 +9,20 @@ clean:
 	rm -f $(RSYNC_ARCHIVE)
 
 $(RSYNC_ARCHIVE):
-	cd /bin && zip -9 $(PWD)/$@ rsync.exe $(RSYNC_DEPENDENCIES)
+	rm -rf build
+	install -d \
+		build/cmd \
+		build/bin
+	cd build/cmd \
+		&& wget https://github.com/kiennq/scoop-better-shimexe/releases/download/v3.2.1/shimexe-x86_64.zip \
+		&& unzip shimexe-x86_64.zip shim.exe \
+		&& mv shim.exe rsync.exe \
+		&& rm shimexe-x86_64.zip \
+		&& printf "path = \"C:\\\\Program Files\\\\rsync\\\\bin\\\\rsync.exe\"\n" >rsync.shim
+	cd /bin \
+		&& cp -a rsync.exe $(RSYNC_DEPENDENCIES) $(PWD)/build/bin
+	cd build \
+		&& zip -r -9 $(PWD)/$@ *
 	unzip -l $@
 	sha256sum $@
 
